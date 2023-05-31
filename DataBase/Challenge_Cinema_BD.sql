@@ -175,6 +175,10 @@ FOREIGN KEY (forma_pagto)
 
 --add coluna em funcionario
 ALTER TABLE funcionario ADD COLUMN dt_desligamento DATE NOT NULL;
+--corrigindo -> valor poderá ser nulo 
+ALTER TABLE funcionario ALTER COLUMN dt_desligamento TYPE DATE;
+ALTER TABLE funcionario ALTER COLUMN dt_desligamento DROP NOT NULL;
+
 --add constraints de verificação em tabela escala_funcionario
 ALTER TABLE escala_funcionario ADD CHECK (funcao IN ('CAIXA', 'GERENTE', 'ATENDENTE'));
 ALTER TABLE assento ADD CHECK (tipo_assento IN ('NORMAL', 'PNE', 'LARGO'));
@@ -216,7 +220,11 @@ SELECT * FROM artista ;
 INSERT INTO artista VALUES (1, 'Fernanda Montenegro', 'Brasileira', 'F');
 INSERT INTO artista VALUES (2, 'Robert de Niro', 'Norte-Americano', 'M');
 INSERT INTO artista VALUES (3, 'Aracy de Almeida', 'Brasileiro', 'M');
-INSERT INTO artista VALUES (4, 'Britanica', 'Gilian Anderson', 'F');
+INSERT INTO artista VALUES (4, 'Gilian Anderson', 'Britanica', 'F');
+--corrigindo linha
+DELETE FROM artista
+WHERE nome_artista = 'Britanica';
+INSERT INTO artista VALUES (4, 'Gilian Anderson', 'Gilian Anderson', 'F');
 -- horario, filme, sessao, sala , elenco			
 INSERT INTO horario VALUES (4, '18:00');
 -- filme 
@@ -261,99 +269,367 @@ INSERT INTO sessao_filme VALUES (default, default, '2D',
 	
 -- horario
 SELECT * FROM horario ;
-INSERT INTO horario VALUES ( 2, '16:00');
-INSERT INTO horario VALUES ( 3, '17:00');
-INSERT INTO horario VALUES ( 5, '20:00');
-INSERT INTO horario VALUES ( 6, '22:00');
+INSERT INTO horario VALUES (2, '16:00');
+INSERT INTO horario VALUES (3, '17:00');
+INSERT INTO horario VALUES (5, '20:00');
+INSERT INTO horario VALUES (6, '22:00');
 
 --  assento ;
 SELECT * FROM assento ;
 SELECT * FROM sala ;
-INSERT INTO assento VALUES ( 1, 'A', 'Azul', 'NORMAL', 'DISPONIVEL');
-INSERT INTO assento VALUES ( 2, 'A', 'Azul', 'PNE', 'DISPONIVEL');
-INSERT INTO assento VALUES ( 3, 'A', 'Azul', 'LARGO', 'DISPONIVEL');
-INSERT INTO assento VALUES ( 11, 'C', 'Azul', 'NORMAL', 'DISPONIVEL');
-INSERT INTO assento VALUES ( 21, 'C', 'Azul', 'PNE', 'DISPONIVEL') ;
-INSERT INTO assento VALUES ( 31, 'C', 'Azul', 'LARGO', 'DISPONIVEL') ;
-INSERT INTO assento VALUES ( 5, 'B', 'Azul', 'NORMAL', 'DISPONIVEL') ;
-INSERT INTO assento VALUES ( 6, 'B', 'Azul', 'NORMAL', 'DISPONIVEL') ;
-INSERT INTO assento VALUES ( 7, 'B', 'Azul', 'NORMAL', 'DISPONIVEL') ;
-INSERT INTO assento VALUES ( 1, 'A', 'Vermelha', 'NORMAL', 'DISPONIVEL') ;
-INSERT INTO assento VALUES ( 2, 'A', 'Vermelha', 'PNE', 'DISPONIVEL') ;
-INSERT INTO assento VALUES ( 3, 'A', 'Vermelha', 'LARGO', 'DISPONIVEL') ;
-INSERT INTO assento VALUES ( 11, 'G', 'Vermelha', 'NORMAL', 'DISPONIVEL') ;
-INSERT INTO assento VALUES ( 12, 'G', 'Vermelha', 'PNE', 'DISPONIVEL') ;
-INSERT INTO assento VALUES ( 13, 'G', 'Vermelha', 'LARGO', 'DISPONIVEL') ;
-INSERT INTO assento VALUES ( 10, 'B', 'Vermelha', 'NORMAL', 'DISPONIVEL') ;
-INSERT INTO assento VALUES ( 20, 'B', 'Vermelha', 'PNE', 'DISPONIVEL') ;
-INSERT INTO assento VALUES ( 30, 'B', 'Vermelha', 'LARGO', 'DISPONIVEL') ;
+INSERT INTO assento VALUES (1, 'A', 'Azul', 'NORMAL', 'DISPONIVEL');
+INSERT INTO assento VALUES (2, 'A', 'Azul', 'PNE', 'DISPONIVEL');
+INSERT INTO assento VALUES (3, 'A', 'Azul', 'LARGO', 'DISPONIVEL');
+INSERT INTO assento VALUES (11, 'C', 'Azul', 'NORMAL', 'DISPONIVEL');
+INSERT INTO assento VALUES (21, 'C', 'Azul', 'PNE', 'DISPONIVEL');
+INSERT INTO assento VALUES (31, 'C', 'Azul', 'LARGO', 'DISPONIVEL');
+INSERT INTO assento VALUES (5, 'B', 'Azul', 'NORMAL', 'DISPONIVEL');
+INSERT INTO assento VALUES (6, 'B', 'Azul', 'NORMAL', 'DISPONIVEL');
+INSERT INTO assento VALUES (7, 'B', 'Azul', 'NORMAL', 'DISPONIVEL');
+INSERT INTO assento VALUES (1, 'A', 'Vermelha', 'NORMAL', 'DISPONIVEL');
+INSERT INTO assento VALUES (2, 'A', 'Vermelha', 'PNE', 'DISPONIVEL');
+INSERT INTO assento VALUES (3, 'A', 'Vermelha', 'LARGO', 'DISPONIVEL');
+INSERT INTO assento VALUES (11, 'G', 'Vermelha', 'NORMAL', 'DISPONIVEL');
+INSERT INTO assento VALUES (12, 'G', 'Vermelha', 'PNE', 'DISPONIVEL');
+INSERT INTO assento VALUES (13, 'G', 'Vermelha', 'LARGO', 'DISPONIVEL');
+INSERT INTO assento VALUES (10, 'B', 'Vermelha', 'NORMAL', 'DISPONIVEL');
+INSERT INTO assento VALUES (20, 'B', 'Vermelha', 'PNE', 'DISPONIVEL');
+INSERT INTO assento VALUES (30, 'B', 'Vermelha', 'LARGO', 'DISPONIVEL');
+
 -- forma de pagamento
 SELECT * FROM forma_pgto ;
-INSERT INTO forma_pgto VALUES ( 'DIN', 'DINHEIRO', 'ATIVO' ) ;
-INSERT INTO forma_pgto VALUES ( 'CCRED', 'CARTAO CREDITO', 'ATIVO' ) ;
-INSERT INTO forma_pgto VALUES ( 'PIX', 'PIX' , 'ATIVO' ) ;
--- ingresso
-SELECT * FROM ingresso ;
-SELECT * FROM sessao_filme ;
-INSERT INTO ingresso VALUES ( default , 'MEIA', 25.00,  'DIN', 1, 'A', 'Azul', 23002 ) ;
-INSERT INTO ingresso VALUES ( default , 'INTEIRA', 50.00, 'PIX', 2, 'A', 'Azul', 23002) ;
-INSERT INTO ingresso VALUES ( default , 'MEIA', 25.00,  'DIN', 1, 'A', 'Vermelha', 23001) ;
-INSERT INTO ingresso VALUES ( default , 'INTEIRA', 50.00,  'PIX', 3, 'A', 'Azul', 23002) ;
-INSERT INTO ingresso VALUES ( default , 'MEIA', 25.00, 'DIN', 2, 'A', 'Vermelha', 23001) ;
-INSERT INTO ingresso VALUES ( default , 'INTEIRA', 50.00, 'PIX', 3, 'A', 'Vermelha', 23001) ;
-INSERT INTO ingresso VALUES ( default, 'MEIA', 25.00, 'DIN', 5, 'B', 'Azul', 23002) ;
-INSERT INTO ingresso VALUES ( default , 'INTEIRA', 50.00,  'CCRED', 11, 'G', 'Vermelha', 23001) ;
+INSERT INTO forma_pgto VALUES ('DIN', 'DINHEIRO', 'ATIVO');
+INSERT INTO forma_pgto VALUES ('CCRED', 'CARTAO CREDITO', 'ATIVO');
+INSERT INTO forma_pgto VALUES ('PIX', 'PIX' , 'ATIVO');
 
-INSERT INTO ingresso VALUES ( default , 'MEIA', 25.00,  'CCRED',  21, 'C', 'Azul', 23002) ;
-INSERT INTO ingresso VALUES ( default , 'INTEIRA', 50.00, 'PIX', 12, 'G', 'Vermelha', 23001) ;
-INSERT INTO ingresso VALUES ( default , 'MEIA', 25.00, 'PIX', 6, 'B', 'Azul', 23002) ;
-INSERT INTO ingresso VALUES ( default , 'INTEIRA', 50.00,  'DIN',13, 'G', 'Vermelha', 23001) ;
-INSERT INTO ingresso VALUES ( default , 'MEIA', 25.00,  'CCRED',10, 'B', 'Vermelha', 23001) ;
-INSERT INTO ingresso VALUES ( default , 'INTEIRA', 50.00, 'PIX', 7, 'B', 'Azul', 23002) ;
-INSERT INTO ingresso VALUES ( default , 'MEIA', 25.00, 'CCRED', 20, 'B', 'Vermelha', 23001) ;
-INSERT INTO ingresso VALUES ( default , 'INTEIRA', 50.00,  'CCRED',  30, 'B', 'Vermelha', 23001) ;
+-- ingresso
+SELECT * FROM ingresso;
+SELECT * FROM sessao_filme;
+SELECT * FROM forma_pgto;
+INSERT INTO ingresso VALUES (default , 'MEIA', 25.00,  'DIN', 1, 'A', 'Azul', 2 );
+INSERT INTO ingresso VALUES (default , 'INTEIRA', 50.00, 'PIX', 2, 'A', 'Azul', 2);
+INSERT INTO ingresso VALUES (default , 'MEIA', 25.00,  'DIN', 1, 'A', 'Vermelha', 1);
+INSERT INTO ingresso VALUES (default , 'INTEIRA', 50.00,  'PIX', 3, 'A', 'Azul', 2);
+INSERT INTO ingresso VALUES (default , 'MEIA', 25.00, 'DIN', 2, 'A', 'Vermelha', 1);
+INSERT INTO ingresso VALUES (default , 'INTEIRA', 50.00, 'PIX', 3, 'A', 'Vermelha', 1);
+INSERT INTO ingresso VALUES (default, 'MEIA', 25.00, 'DIN', 5, 'B', 'Azul', 2);
+INSERT INTO ingresso VALUES (default , 'INTEIRA', 50.00,  'CCRED', 11, 'G', 'Vermelha', 1);
+INSERT INTO ingresso VALUES (default , 'MEIA', 25.00,  'CCRED',  21, 'C', 'Azul', 2);
+INSERT INTO ingresso VALUES (default , 'INTEIRA', 50.00, 'PIX', 12, 'G', 'Vermelha', 1);
+INSERT INTO ingresso VALUES (default , 'MEIA', 25.00, 'PIX', 6, 'B', 'Azul', 2);
+INSERT INTO ingresso VALUES (default , 'INTEIRA', 50.00,  'DIN',13, 'G', 'Vermelha', 1);
+INSERT INTO ingresso VALUES (default , 'MEIA', 25.00,  'CCRED',10, 'B', 'Vermelha', 1);
+INSERT INTO ingresso VALUES (default , 'INTEIRA', 50.00, 'PIX', 7, 'B', 'Azul', 2);
+INSERT INTO ingresso VALUES (default , 'MEIA', 25.00, 'CCRED', 20, 'B', 'Vermelha', 1);
+INSERT INTO ingresso VALUES (default , 'INTEIRA', 50.00,  'CCRED',  30, 'B', 'Vermelha', 1);
+--corrigindo ingresso
+ALTER TABLE ingresso DROP COLUMN forma_pagto;
 
 -- funcionário
-SELECT * FROM Funcionario ;
+SELECT * FROM funcionario;
 INSERT INTO funcionario VALUES ( 1000, 'Jose de Arimateia','M', '10/10/1980', 'Rua Amarela, 10', 
-current_date - 500, 123456, null) ;
+current_date - 500, 123456, null);
 INSERT INTO funcionario VALUES ( 1001, 'Maria Conceicao dos Santos','F', '15/12/1988', 'Rua Azul, 20', 
-current_date - 300, 987654, null) ;
+current_date - 300, 987654, null);
 INSERT INTO funcionario VALUES ( 1002, 'Tereza Baptista Silva','F', '05/02/1978', 'Rua Verde, 30', 
-'10/01/2016', 658734, null) ;
+'10/01/2016', 658734, null);
 INSERT INTO funcionario VALUES ( 1003, 'Joao de Castro e Souza','M', '10/01/1970', 'Rua Branca, 10', 
-current_date - 100, 765432, null) ;
+current_date - 100, 765432, null);
 INSERT INTO funcionario VALUES ( 1004, 'Carla Marinho','F', '05/05/1978', 'Rua Vermelha, 20', 
-current_date - 120, 342176, null) ;
+current_date - 120, 342176, null);
 INSERT INTO funcionario VALUES ( 1005, 'Francine Oliver','F', '25/02/1996', 'Rua Verde, 50', 
-'10/11/2016', 543734, null) ;
+'10/11/2016', 543734, null);
 
 -- escala trabalho
-SELECT * FROM escala_trabalho ;
-INSERT INTO escala_trabalho VALUES ( 1,  'Segunda-Feira', 1, 5 ) ;
-INSERT INTO escala_trabalho VALUES ( 2,  'Segunda-Feira', 4, 6 ) ;
-INSERT INTO escala_trabalho VALUES ( 3,  'Terca-Feira', 1, 5 ) ;
-INSERT INTO escala_trabalho VALUES ( 4,  'Terca-Feira', 4, 6 ) ;
-INSERT INTO escala_trabalho VALUES ( 5,  'Quarta-Feira', 1, 5 ) ;
-INSERT INTO escala_trabalho VALUES ( 6,  'Quarta-Feira', 4, 6 ) ;
+SELECT * FROM escala_trabalho;
+INSERT INTO escala_trabalho VALUES (1, 'Segunda-Feira', 1, 5);
+INSERT INTO escala_trabalho VALUES (2, 'Segunda-Feira', 4, 6);
+INSERT INTO escala_trabalho VALUES (3, 'Terca-Feira', 1, 5);
+INSERT INTO escala_trabalho VALUES (4, 'Terca-Feira', 4, 6);
+INSERT INTO escala_trabalho VALUES (5, 'Quarta-Feira', 1, 5);
+INSERT INTO escala_trabalho VALUES (6, 'Quarta-Feira', 4, 6);
 
 -- escala de atendimento
-SELECT *  FROM escala_funcionario ;
-INSERT INTO escala_funcionario VALUES ( 1, 1001, current_date - 21, 'Caixa') ; -- ***** REVISAR current_date - 21 ******
-INSERT INTO escala_funcionario VALUES ( 1, 1002, current_date - 21,'Atendente') ;
-INSERT INTO escala_funcionario VALUES ( 3, 1001, current_date - 21,'Atendente') ;
-INSERT INTO escala_funcionario VALUES ( 3, 1002, current_date - 21,'Atendente') ;
-INSERT INTO escala_funcionario VALUES ( 3, 1003, current_date - 21,'Caixa') ;
-INSERT INTO escala_funcionario VALUES ( 2, 1001, current_date - 14,'Caixa') ;
-INSERT INTO escala_funcionario VALUES ( 2, 1002, current_date - 14,'Atendente') ;
-INSERT INTO escala_funcionario VALUES ( 4, 1001, current_date - 7,'Atendente') ;
-INSERT INTO escala_funcionario VALUES ( 4, 1002, current_date - 7,'Atendente') ;
-INSERT INTO escala_funcionario VALUES ( 4, 1003, current_date - 7,'Caixa') ;
-INSERT INTO escala_funcionario VALUES ( 5, 1001, current_date ,'Caixa') ;
-INSERT INTO escala_funcionario VALUES ( 5, 1002, current_date ,'Atendente') ;
-INSERT INTO escala_funcionario VALUES ( 6, 1001, current_date + 7, 'Atendente') ;
-INSERT INTO escala_funcionario VALUES ( 6, 1002, current_date + 7,'Atendente') ;
-INSERT INTO escala_funcionario VALUES ( 6, 1003, current_date + 7,'Atendente') ;
-	
-SELECT * FROM sessao_horario;
+SELECT * FROM escala_funcionario;
 SELECT * FROM horario;
+INSERT INTO escala_funcionario VALUES (1, 1001, current_date - 21, 'CAIXA'); 
+INSERT INTO escala_funcionario VALUES (1, 1002, current_date - 21,'ATENDENTE');
+INSERT INTO escala_funcionario VALUES (3, 1001, current_date - 21,'ATENDENTE');
+INSERT INTO escala_funcionario VALUES (3, 1002, current_date - 21,'GERENTE');
+INSERT INTO escala_funcionario VALUES (3, 1003, current_date - 21,'CAIXA');
+INSERT INTO escala_funcionario VALUES (2, 1001, current_date - 14,'CAIXA');
+INSERT INTO escala_funcionario VALUES (2, 1002, current_date - 14,'GERENTE');
+INSERT INTO escala_funcionario VALUES (4, 1001, current_date - 7,'ATENDENTE');
+INSERT INTO escala_funcionario VALUES (4, 1002, current_date - 7,'GERENTE');
+INSERT INTO escala_funcionario VALUES (4, 1003, current_date - 7,'CAIXA');
+INSERT INTO escala_funcionario VALUES (5, 1001, current_date ,'CAIXA');
+INSERT INTO escala_funcionario VALUES (5, 1002, current_date ,'ATENDENTE');
+INSERT INTO escala_funcionario VALUES (6, 1001, current_date + 7, 'ATENDENTE');
+INSERT INTO escala_funcionario VALUES (6, 1002, current_date + 7,'ATENDENTE');
+INSERT INTO escala_funcionario VALUES (6, 1003, current_date + 7,'ATENDENTE');
+
+/* 2 – Após popular as tabelas em verde,  transforme as colunas Nacionalidade em Artista e Filme
+em uma tabela auxiliar com Código e Nome do País, por exemplo :
+código 01, nome Brasil. Estabeleça o relacionamento e atualize os dados nas tabelas de origem */
+
+DROP TABLE IF EXISTS nacionalidade CASCADE;
+CREATE TABLE nacionalidade 
+( 
+	cod_pais SMALLINT PRIMARY KEY,
+	nome_pais CHAR(25) NOT NULL 
+);
+
+INSERT INTO nacionalidade VALUES (1 , 'BRASIL');
+INSERT INTO nacionalidade VALUES (2 , 'ESTADOS UNIDOS DA AMERICA');
+INSERT INTO nacionalidade VALUES (3, 'INGLATERRA');
+INSERT INTO nacionalidade VALUES (4, 'AUSTRALIA');
+INSERT INTO nacionalidade VALUES (5, 'ARGENTINA');
+--RESOLVENDO FILME
+--add cod_nacionalidade (cod_pais) em filme
+ALTER TABLE filme ADD COLUMN cod_nacionalidade SMALLINT;
+--reconfigurando valores BRASIL E EUA em nacionalidade filme para cod_nacionalidade
+UPDATE filme
+SET cod_nacionalidade = 1
+WHERE UPPER (nacionalidade_filme) LIKE '%BRASIL%';
+UPDATE filme 
+SET cod_nacionalidade = 2
+WHERE (nacionalidade_filme) LIKE '%EUA%';
+--declarando fk filme x nacionalidade
+ALTER TABLE filme ADD CONSTRAINT fk_nacionalidadefilme FOREIGN KEY (cod_nacionalidade)
+REFERENCES nacionalidade (cod_pais);
+--excluir coluna nacionalidade em filme
+ALTER TABLE filme DROP COLUMN nacionalidade_filme;
+--definir como NOT NULL
+ALTER TABLE filme ALTER COLUMN cod_nacionalidade SET NOT NULL;
+--reconfigurando valores BRASIL E EUA em nacionalidade filme para cod_nacionalidade
+--RESOLVENDO ARTISTA
+--add cod_nacionalidade em Artista
+ALTER TABLE artista ADD COLUMN cod_nacionalidade SMALLINT;
+--reconfigurando valores BRASILEIRA/AMERICANO/BRITANICA em nacionalidade Artista para cod_nacionalidade
+UPDATE artista
+SET cod_nacionalidade = 1
+WHERE UPPER (nacionalidade_artista) LIKE '%BRASIL%';
+UPDATE artista
+SET cod_nacionalidade = 2
+WHERE UPPER (nacionalidade_artista) LIKE '%AMERICANO%';
+UPDATE artista
+SET cod_nacionalidade = 3
+WHERE UPPER(nacionalidade_artista) LIKE '%BRITAN%'; 
+--declarando fk artista(cod_nacionalidade) x nacionalidade(cod_pais)
+ALTER TABLE artista ADD CONSTRAINT fk_nacionalidadeartista FOREIGN KEY (cod_nacionalidade)
+REFERENCES nacionalidade (cod_pais);
+--excluindo nacionalidade_artista em artista
+ALTER TABLE artista DROP COLUMN nacionalidade_artista;
+--definir cod_nacionalidade como NOT NULL
+ALTER TABLE artista ALTER COLUMN cod_nacionalidade SET NOT NULL;
+
+/********************************
+SQL DQL - SELECTS  
+*********************************/
+-- Sintaxe do SELECT 
+-- SELECT coluna1, coluna2,...., colunaN
+-- FROM tabela1, tabela2,...., tabelaN
+-- WHERE condicao1, ... condicaoN;
+
+--Consultas com funções caracter 
+SELECT * FROM filme;
+--Discriminando as colunas
+SELECT titulo_filme
+FROM filme
+WHERE genero = 'Drama';
+
+SELECT f.titulo_filme, f.genero
+FROM filme f;
+
+-- Discriminando as colunas dando apelido para as colunas -> Alias
+SELECT titulo_filme AS Titulo, genero, estudio, duracao_min AS "Duração em Minutos"
+FROM filme
+WHERE genero = 'Drama';
+
+-- Usando funções de formatação de caracter - UPPER, LOWER , INITCAP
+SELECT UPPER(titulo_filme) AS Maiusculo, LOWER(genero) AS Minusculo, 
+INITCAP(estudio) AS "Primeiro em Maisculo restante em minusculo",
+duracao_min AS "Duracao em minutos"
+FROM filme
+WHERE UPPER (genero) = 'DRAMA';
+
+-- Operador de concatenação : concatena as strings tirando o espaço entre elas
+-- Filme foi lancado em ano tal , é do genero tal e produzido por estudio tal e
+-- demanda tantos minutos de paciência // para filmes com mais de 120 min
+SELECT titulo_filme||' foi lançado em '||TO_CHAR(ano_lancto,'9999')||
+', e do genero'||genero||', produzido pelo estudio'||estudio||
+' e demanda'||TO_CHAR(duracao_min, '9999')||' minutos de paciencia'
+AS "Dados do Filme"
+FROM filme;
+
+---- operador LIKE - busca não exata
+
+INSERT INTO filme VALUES (1002, 'Bye Bye Brasil', 'Bye Bye Brasil', 1980,
+	'Portugues', 1979, '16 anos', 'Gaumont', 105 , 'Comedia', 'Catalogo', 1);	
+	
+-- todos os filmes com brasil no titulo
+SELECT titulo_filme
+FROM filme
+WHERE UPPER (titulo_filme) LIKE '%BRASIL%';
+-- Brazil ou Brasil - _ é a máscara para um caracter
+SELECT * 
+FROM filme
+WHERE UPPER (titulo_filme) LIKE '%BRA_IL%';
+-- encontrar todos os funcionarios de nome João 
+SELECT * 
+FROM funcionario
+WHERE UPPER (nome_func) LIKE '%JO_O%';
+-- exemplo de Initcap
+SELECT INITCAP ('bolinha'), INITCAP('TRIANGULO');
+--WHERE com AND e OR
+SELECT titulo_filme, ano_lancto, ano_producao
+FROM filme
+WHERE UPPER (titulo_filme) LIKE '%BRASIL%'
+AND ano_lancto > 1990;
+--OR
+SELECT titulo_filme, ano_lancto, ano_producao
+FROM filme
+WHERE UPPER (titulo_filme) LIKE '%BRASIL%'
+OR ano_lancto > 1990;
+--OR e AND
+SELECT titulo_filme, ano_lancto, ano_producao
+FROM filme
+WHERE UPPER (titulo_filme) LIKE '%BRASIL%'
+OR ano_lancto > 1990 AND genero != 'Drama';
+
+-- Funções de data
+-- Data e hora atuais: 
+-- current_date, current_timestamp, localtimestamp, now(), time()
+SELECT current_date AS "Hora Atual",
+	   current_timestamp AS "Data e Hora Atual com local zone",
+	   localtimestamp AS "Idem current_timestamp sem local zone",
+	   now() AS "Idem current_timestamp";
+--Função EXTRACT, extrai um pedaço da data Ano ou mês, hora, minuto, semana
+SELECT EXTRACT (YEAR FROM current_date) AS "Ano",
+	   EXTRACT (MONTH FROM current_date) AS "Mês",
+	   EXTRACT (HOUR FROM current_timestamp) AS "Hora",
+	   EXTRACT (SECOND FROM current_timestamp) AS "Segundos",
+	   EXTRACT (WEEK FROM current_date) AS "Dias da Semana";
+SELECT EXTRACT (YEAR FROM TO_DATE('10/02/1991', 'DD/MM/YYYY'));
+
+--calculo da idade dos funcionarios
+SELECT nome_func AS "Funcionario",
+	   TRUNC((current_date - dt_nascto_func)/365.25) AS Idade
+FROM funcionario
+ORDER BY Idade ASC;
+--Intervalo entre datas OPERADOR INTERVAL
+SELECT current_date - INTERVAL '1' MONTH;
+SELECT current_date + INTERVAL '10' YEAR;
+SELECT current_date + INTERVAL '28' DAY;	 
+--Funcionarios que admitidos há mais de um ano e meio
+SELECT nome_func, dt_admissao, 
+FROM funcionario
+WHERE dt_admissao < current_date - INTERVAL '1' YEAR - INTERVAL '6' MONTH;
+
+
+--Funcionarios com mais de 22 anos admitidos no  ano passado
+SELECT nome_func, dt_nascto_func,
+	TRUNC((current_date - dt_nascto_func)/365.25) AS Idade, dt_admissao
+FROM funcionario
+WHERE TRUNC((current_date - dt_nascto_func)/365.25) > 22
+AND EXTRACT(YEAR FROM dt_admissao) = EXTRACT(YEAR FROM current_date - INTERVAL '1' YEAR);
+
+/****** Junção - JOIN 
+SELECTS envolvendo mais de uma tabela ****/
+
+--Nacionalidade dos artistas
+SELECT * FROM artista; --4 artistas
+SELECT * FROM nacionalidade; -- 5 nacionalidades
+
+SELECT a.nome_artista, n.nome_pais
+FROM nacionalidade n, artista a
+WHERE n.cod_pais = a.cod_nacionalidade; -- Junção no WHERE
+
+--sintaxe INNER JOIN
+SELECT a.nome_artista, n.nome_pais
+FROM nacionalidade n INNER JOIN artista a
+	ON (n.cod_pais = a.cod_nacionalidade); --colunas junção
+
+--três tabelas - Mostrar o elenco dos filmes (artista, elenco filme, filme)
+SELECT a.nome_artista,  f.titulo_filme, ef.tipo_participacao, 
+	   ef.personagem
+FROM filme f INNER JOIN elenco_filme ef -- FILME > ELENCO_FILME
+ON (f.cod_filme = ef.cod_filme)
+             INNER JOIN artista a  -- ELENCO_FILME > ARTISTA 	
+ON (a.cod_artista = ef.cod_artista); 
+
+--três tabelas - Mostrar o elenco dos filmes em que o título contenha Brasil e e o ano lançamento > 19
+SELECT a.nome_artista,  f.titulo_filme, ef.tipo_participacao, 
+	   ef.personagem	   
+FROM filme f INNER JOIN elenco_filme ef
+ON (f.cod_filme = ef.cod_filme)
+             INNER JOIN artista a
+ON (a.cod_artista = ef.cod_artista)
+WHERE UPPER (f.titulo_filme) LIKE '%BRASIL%'
+AND f.ano_lancto > 1980;
+-- quatro tabelas incluindo a nacionalidade filme > elenco_filme > artista > nacionalidade
+SELECT f.titulo_filme, f.genero, f.ano_lancto, n.nome_pais, 
+a.nome_artista, ef.personagem
+FROM filme f INNER JOIN elenco_filme ef 
+ON (f.cod_filme = ef.cod_filme) 
+	         INNER JOIN artista a
+ON (a.cod_artista = ef.cod_artista)
+			 INNER JOIN nacionalidade n
+ON (f.cod_nacionalidade = ef.cod_nacionalidade)
+WHERE UPPER (f.titulo_filme) LIKE '%BRASIL%'
+AND f.ano_lancto > 1980;
+
+
+SELECT f.titulo_filme, f.genero, f.ano_lancto, n.nome_pais, 
+a.nome_artista, ef.personagem
+FROM filme f JOIN elenco_filme ef 
+ON ( f.cod_filme = ef.cod_filme  )  -- junção filme x elenco
+             JOIN artista a
+ON ( a.cod_artista = ef.cod_artista)   -- juncao elenco x artista
+             JOIN nacionalidade n
+ON ( f.cod_nacionalidade = n.cod_pais )	-- juncao filme x nacionalidade		 
+WHERE UPPER(f.titulo_filme) LIKE '%BRASIL%' 
+AND f.ano_lancto > 1980 ; 
+
+/*Atividade 08 - Utilizando a instrução SELECT da linguagem SQL responda às seguintes consultas :
+1– Mostrar os dados dos filmes do gênero Aventura no formato: ‘Guerra nas Estrelas 
+foi lançado em 1977 com classificação etária LIVRE’ */
+SELECT titulo_filme || ' foi lancado em ' || ano_lancto ||
+' com classificacao etaria ' || (classifica_etaria) 
+AS "Dados do Filme"
+FROM filme
+WHERE UPPER (genero) LIKE '%DRAMA%' 
+
+/*SELECT RTRIM ('Good morning!     '),
+	   LTRIM ('        Good morning!'),
+	   TRIM  ('        Good morning!'); */
+	   
+/* 2- Mostrar o título original, estúdio e ano de lançamento dos filmes 
+que tem ‘GUERRA’ ou ‘BATALHA’ no título e duram mais de 140 minutos */
+SELECT titulo_original, estudio, ano_lancto
+FROM filme
+WHERE UPPER (titulo_filme)LIKE '%GUERRA%' OR UPPER (titulo_filme)LIKE '%BATALHA%'
+AND (duracao_min >= 140); 
+
+/* 3– Mostrar os dados dos funcionários mulheres 
+admitidas há mais de um ano e idade superior a 22 anos:
+Nome Funcionário-Idade */
+SELECT nome_func, TRUNC((current_date - dt_nascto_func)/365.25) AS Idade
+FROM funcionario
+WHERE TRUNC(current_date - dt_nascto_func) > 22
+AND sexo_func = 'F'
+AND TRUNC (current_date - dt_admissao) > 1;
+
+/* 4- Mostrar as sessões de cinema exibidas em salas 
+com capacidade superior a 100 lugares: 
+Número da Sessão – Data Sessão – Nome Sala – Capacidade */
+
+
+
+SELECT * FROM filme; --3filmes
+SELECT * FROM elenco_filme; --
+SELECT * FROM funcionario; --
+
+
+
+
