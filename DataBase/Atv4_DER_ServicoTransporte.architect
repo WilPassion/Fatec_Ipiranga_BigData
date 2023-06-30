@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<architect-project version="1.0" appversion="1.0.9">
+ <project-name>DER_ServicoTransporte</project-name>
+ <print-settings numCopies="1" zoom="1.0" pageNumbersPrinted="true" orientation="1" paperWidth="612.0" paperHeight="792.0" leftBorder="50.0" rightBorder="50.0" topBorder="50.0" bottomBorder="50.0" />
+ <project-data-sources>
+  <data-source id="DS0">
+   <property key="Logical" value="PlayPen Database" />
+  </data-source>
+ </project-data-sources>
+ <source-databases>
+ </source-databases>
+ <target-database id="ppdb" dbcs-ref="DS0">
+  <table id="TAB1" populated="true" UUID="20a37dbf-5918-4391-8f01-8247040b4db2" name="CD_contratante " objectType="TABLE" physicalName="CD_contratante " >
+   <remarks></remarks>
+   <folder id="FOLTAB11" populated="true" name="Columns" physicalName="Columns" type="1">
+    <column id="COL2" populated="true" UUID="7b3d2065-7e30-4380-9421-f9435dca86a2" autoIncrement="false" autoIncrementSequenceName="CD_contratante _Cod_CD_seq" defaultValue="" name="Cod_CD" nullable="0" physicalName="Cod_CD" precision="0" primaryKeySeq="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
+     <remarks></remarks>
+    </column>
+    <column id="COL3" populated="true" UUID="7209953e-eb13-4eb0-a087-9dd1cec4a7a2" autoIncrement="false" autoIncrementSequenceName="CD_contratante _Nome_contratante_seq" defaultValue="" name="Nome_contratante" nullable="0" physicalName="Nome_contratante" precision="50" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    <column id="COL4" populated="true" UUID="280a2fc4-ac00-4e5f-a8dc-0dd449155cfb" autoIncrement="false" autoIncrementSequenceName="CD_contratante _Armazem_origem_seq" defaultValue="" name="Armazem_origem" nullable="0" physicalName="Armazem_origem" precision="50" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    </folder>
+    <folder id="FOLTAB13" populated="true" name="Exported Keys" physicalName="Exported Keys" type="3">
+    </folder>
+    <folder id="FOLTAB12" populated="true" name="Imported Keys" physicalName="Imported Keys" type="2">
+    </folder>
+    <folder id="FOLTAB14" populated="true" name="Indices" physicalName="Indices" type="4">
+    <index id="IDX5" populated="true" UUID="5dfaac56-f3be-440b-9e84-24feed0a68ae" clustered="false" name="Cod_CD" physicalName="Cod_CD" primaryKeyIndex="true" unique="false" >
+     <index-column id="IDC6" populated="true" UUID="d6341136-7e6f-43c7-80fd-7782bad80d3e" ascendingOrDescending="UNSPECIFIED" column-ref="COL2" name="Cod_CD" physicalName="Cod_CD" />
+    </index>
+   </folder>
+  </table>
+  <table id="TAB7" populated="true" UUID="907706d3-d24d-4d60-90e7-4fe338d8d03c" name="Remessa" objectType="TABLE" physicalName="Remessa" >
+   <remarks></remarks>
+   <folder id="FOLTAB71" populated="true" name="Columns" physicalName="Columns" type="1">
+    <column id="COL8" populated="true" UUID="e62540a4-e934-4f01-beda-83d165351562" autoIncrement="false" autoIncrementSequenceName="Remessa_Num_remessa_seq" defaultValue="" name="Num_remessa" nullable="0" physicalName="Num_remessa" precision="0" primaryKeySeq="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
+     <remarks></remarks>
+    </column>
+    <column id="COL9" populated="true" UUID="a8624b67-2c09-4abc-95fc-7de2712604b5" autoIncrement="false" autoIncrementSequenceName="CD_contratante _Cod_CD_seq" defaultValue="" name="Cod_CD" nullable="0" physicalName="Cod_CD" precision="0" primaryKeySeq="1" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
+     <remarks></remarks>
+    </column>
+    <column id="COL10" populated="true" UUID="43d59751-b3ce-40bc-986f-3cb462e3aa5f" autoIncrement="false" autoIncrementSequenceName="Remessa_Peso_remessa_seq" defaultValue="" name="Peso_remessa" nullable="0" physicalName="Peso_remessa" precision="10" referenceCount="1" scale="2" sourceDataTypeName="UserDefinedSQLType" type="2" userDefinedTypeUUID="115245ce-612c-4d6a-b559-6dd903dd959a" >
+     <remarks></remarks>
+    </column>
+    <column id="COL11" populated="true" UUID="9727c790-6808-4491-80f6-aad48c75a81a" autoIncrement="false" autoIncrementSequenceName="Remessa_Volume_remessa_seq" defaultValue="" name="Volume_remessa" nullable="0" physicalName="Volume_remessa" precision="10" referenceCount="1" scale="2" sourceDataTypeName="UserDefinedSQLType" type="2" userDefinedTypeUUID="115245ce-612c-4d6a-b559-6dd903dd959a" >
+     <remarks></remarks>
+    </column>
+    <column id="COL12" populated="true" UUID="998433f5-4b5b-437c-badf-995a8903ceca" autoIncrement="false" autoIncrementSequenceName="Remessa_End_CD_seq" defaultValue="" name="End_CD" nullable="0" physicalName="End_CD" precision="50" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    <column id="COL13" populated="true" UUID="9688ad62-e184-4524-9ab8-40c4edf0a2a2" autoIncrement="false" autoIncrementSequenceName="Remessa_Cidade_CD_seq" defaultValue="" name="Cidade_CD" nullable="0" physicalName="Cidade_CD" precision="25" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    <column id="COL14" populated="true" UUID="95e3aa8e-982b-4f78-a2e6-9447619232ac" autoIncrement="false" autoIncrementSequenceName="Remessa_UF_CD_seq" defaultValue="" name="UF_CD" nullable="0" physicalName="UF_CD" precision="2" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="1" userDefinedTypeUUID="67ddc63f-5541-4dd1-9236-632d9d155e80" >
+     <remarks></remarks>
+    </column>
+    <column id="COL15" populated="true" UUID="f27e9b6b-5392-402e-967a-11d25cb27b80" autoIncrement="false" autoIncrementSequenceName="Remessa_CEP_CD_seq" defaultValue="" name="CEP_CD" nullable="0" physicalName="CEP_CD" precision="8" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    </folder>
+    <folder id="FOLTAB73" populated="true" name="Exported Keys" physicalName="Exported Keys" type="3">
+    </folder>
+    <folder id="FOLTAB72" populated="true" name="Imported Keys" physicalName="Imported Keys" type="2">
+    </folder>
+    <folder id="FOLTAB74" populated="true" name="Indices" physicalName="Indices" type="4">
+    <index id="IDX16" populated="true" UUID="10917616-3bd1-416b-b567-c364ac14d666" clustered="false" name="Num_remessa" physicalName="Num_remessa" primaryKeyIndex="true" unique="false" >
+     <index-column id="IDC17" populated="true" UUID="fb36670b-2e15-4b48-a8ee-11e06c600262" ascendingOrDescending="UNSPECIFIED" column-ref="COL8" name="Num_remessa" physicalName="Num_remessa" />
+     <index-column id="IDC18" populated="true" UUID="5561fa62-76e5-459a-b82b-7dc22c2e58dc" ascendingOrDescending="UNSPECIFIED" column-ref="COL9" name="Cod_CD" physicalName="Cod_CD" />
+    </index>
+   </folder>
+  </table>
+  <table id="TAB19" populated="true" UUID="e25d0772-7753-49d0-b805-278e0ed146f0" name="Viagem" objectType="TABLE" physicalName="Viagem" >
+   <remarks></remarks>
+   <folder id="FOLTAB191" populated="true" name="Columns" physicalName="Columns" type="1">
+    <column id="COL20" populated="true" UUID="416b6b67-d4eb-4d4c-b4bf-e5021fc3b202" autoIncrement="false" autoIncrementSequenceName="Viagem_Num_viagem_seq" defaultValue="" name="Num_viagem" nullable="0" physicalName="Num_viagem" precision="0" primaryKeySeq="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
+     <remarks></remarks>
+    </column>
+    <column id="COL21" populated="true" UUID="81cd3d9d-48e1-479e-991b-5a08fef16307" autoIncrement="false" autoIncrementSequenceName="Produto_Cod_produto_seq" defaultValue="" name="Cod_produto" nullable="0" physicalName="Cod_produto" precision="0" primaryKeySeq="1" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
+     <remarks></remarks>
+    </column>
+    <column id="COL22" populated="true" UUID="1786a748-acfb-4a34-ae84-c0944a801e3e" autoIncrement="false" autoIncrementSequenceName="Remessa_Num_remessa_seq" defaultValue="" name="Num_remessa" nullable="0" physicalName="Num_remessa" precision="0" primaryKeySeq="2" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
+     <remarks></remarks>
+    </column>
+    <column id="COL23" populated="true" UUID="0c41a6cc-d85f-4ffb-a3af-050138ff7db2" autoIncrement="false" autoIncrementSequenceName="CD_contratante _Cod_CD_seq" defaultValue="" name="Cod_CD" nullable="0" physicalName="Cod_CD" precision="0" primaryKeySeq="3" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
+     <remarks></remarks>
+    </column>
+    <column id="COL24" populated="true" UUID="b817d678-c588-4ab7-b202-55647bef46f4" autoIncrement="false" autoIncrementSequenceName="Viagem_Total_volume_seq" defaultValue="" name="Total_volume" nullable="0" physicalName="Total_volume" precision="10" referenceCount="1" scale="2" sourceDataTypeName="UserDefinedSQLType" type="2" userDefinedTypeUUID="115245ce-612c-4d6a-b559-6dd903dd959a" >
+     <remarks></remarks>
+    </column>
+    <column id="COL25" populated="true" UUID="4b566399-b6a3-4542-8d52-3a2bb3a613e4" autoIncrement="false" autoIncrementSequenceName="Viagem_Capacidade_peso_seq" defaultValue="" name="Total_peso" nullable="0" physicalName="Total_peso" precision="10" referenceCount="1" scale="2" sourceDataTypeName="UserDefinedSQLType" type="2" userDefinedTypeUUID="115245ce-612c-4d6a-b559-6dd903dd959a" >
+     <remarks></remarks>
+    </column>
+    <column id="COL26" populated="true" UUID="b1acaf42-3d64-4c7c-afa8-6c8fd3dc44a6" autoIncrement="false" autoIncrementSequenceName="Viagem_Nome_motorista_seq" defaultValue="" name="Nome_motorista" nullable="0" physicalName="Nome_motorista" precision="50" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    <column id="COL27" populated="true" UUID="0d98d217-4b31-4722-9e45-043b21da6914" autoIncrement="false" autoIncrementSequenceName="Viagem_Distancia_km_seq" defaultValue="" name="Distancia_km" nullable="0" physicalName="Distancia_km" precision="10" referenceCount="1" scale="2" sourceDataTypeName="UserDefinedSQLType" type="2" userDefinedTypeUUID="115245ce-612c-4d6a-b559-6dd903dd959a" >
+     <remarks></remarks>
+    </column>
+    <column id="COL28" populated="true" UUID="1b460928-7c6d-4f8f-95ad-2c5006f3cfbc" autoIncrement="false" autoIncrementSequenceName="Viagem_Caminhao_seq" defaultValue="" name="Caminhao" nullable="0" physicalName="Caminhao" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
+     <remarks></remarks>
+    </column>
+    </folder>
+    <folder id="FOLTAB193" populated="true" name="Exported Keys" physicalName="Exported Keys" type="3">
+    </folder>
+    <folder id="FOLTAB192" populated="true" name="Imported Keys" physicalName="Imported Keys" type="2">
+    </folder>
+    <folder id="FOLTAB194" populated="true" name="Indices" physicalName="Indices" type="4">
+    <index id="IDX29" populated="true" UUID="6bf03dce-922a-4284-adc5-6037e2d1c2d2" clustered="false" name="Num_viagem" physicalName="Num_viagem" primaryKeyIndex="true" unique="false" >
+     <index-column id="IDC30" populated="true" UUID="9201474f-629b-47bf-b427-47b8c5e9bdec" ascendingOrDescending="UNSPECIFIED" column-ref="COL20" name="Num_viagem" physicalName="Num_viagem" />
+     <index-column id="IDC31" populated="true" UUID="9616d802-dffd-4a59-aa94-0c41a6647062" ascendingOrDescending="UNSPECIFIED" column-ref="COL21" name="Cod_produto" physicalName="Cod_produto" />
+     <index-column id="IDC32" populated="true" UUID="7e52597a-143a-49bc-a4ad-e32221bd9e02" ascendingOrDescending="UNSPECIFIED" column-ref="COL22" name="Num_remessa" physicalName="Num_remessa" />
+     <index-column id="IDC33" populated="true" UUID="f8074b94-65a9-43c3-9b92-cda4fdefbb8a" ascendingOrDescending="UNSPECIFIED" column-ref="COL23" name="Cod_CD" physicalName="Cod_CD" />
+    </index>
+   </folder>
+  </table>
+  <table id="TAB34" populated="true" UUID="1fe040ae-f950-4006-85a4-b729cd86c126" name="Caminhao" objectType="TABLE" physicalName="Caminhao" >
+   <remarks></remarks>
+   <folder id="FOLTAB341" populated="true" name="Columns" physicalName="Columns" type="1">
+    <column id="COL35" populated="true" UUID="e4453fd0-9eeb-404c-84f6-fc6f0505ca83" autoIncrement="false" autoIncrementSequenceName="Caminhao_Cod_licenca_seq" defaultValue="" name="Cod_licenca" nullable="0" physicalName="Cod_licenca" precision="0" primaryKeySeq="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
+     <remarks></remarks>
+    </column>
+    <column id="COL36" populated="true" UUID="40aa7f13-8d3a-44de-9f79-1936caf9d181" autoIncrement="false" autoIncrementSequenceName="Viagem_Num_viagem_seq" defaultValue="" name="Num_viagem" nullable="0" physicalName="Num_viagem" precision="0" primaryKeySeq="1" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
+     <remarks></remarks>
+    </column>
+    <column id="COL37" populated="true" UUID="08072c79-d953-46c4-bbe7-9cb5a92f5323" autoIncrement="false" autoIncrementSequenceName="Produto_Cod_produto_seq" defaultValue="" name="Cod_produto" nullable="0" physicalName="Cod_produto" precision="0" primaryKeySeq="2" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
+     <remarks></remarks>
+    </column>
+    <column id="COL38" populated="true" UUID="28f44917-b4d1-4cab-9458-3bb94311d0bc" autoIncrement="false" autoIncrementSequenceName="Remessa_Num_remessa_seq" defaultValue="" name="Num_remessa" nullable="0" physicalName="Num_remessa" precision="0" primaryKeySeq="3" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
+     <remarks></remarks>
+    </column>
+    <column id="COL39" populated="true" UUID="4a1d43b9-6085-4196-b092-73a556a87370" autoIncrement="false" autoIncrementSequenceName="CD_contratante _Cod_CD_seq" defaultValue="" name="Cod_CD" nullable="0" physicalName="Cod_CD" precision="0" primaryKeySeq="4" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
+     <remarks></remarks>
+    </column>
+    <column id="COL40" populated="true" UUID="c90261c5-ad6b-47b2-ace4-3da2f656ba9a" autoIncrement="false" autoIncrementSequenceName="Caminhao_Capacidade_peso_seq" defaultValue="" name="Capacidade_peso" nullable="0" physicalName="Capacidade_peso" precision="10" referenceCount="1" scale="2" sourceDataTypeName="UserDefinedSQLType" type="2" userDefinedTypeUUID="115245ce-612c-4d6a-b559-6dd903dd959a" >
+     <remarks></remarks>
+    </column>
+    <column id="COL41" populated="true" UUID="82b030ad-b708-458b-9f31-2b4878ed3157" autoIncrement="false" autoIncrementSequenceName="Caminhao_ Capacidade_volume_seq" defaultValue="" name=" Capacidade_volume" nullable="0" physicalName=" Capacidade_volume" precision="10" referenceCount="1" scale="2" sourceDataTypeName="UserDefinedSQLType" type="2" userDefinedTypeUUID="115245ce-612c-4d6a-b559-6dd903dd959a" >
+     <remarks></remarks>
+    </column>
+    </folder>
+    <folder id="FOLTAB343" populated="true" name="Exported Keys" physicalName="Exported Keys" type="3">
+    </folder>
+    <folder id="FOLTAB342" populated="true" name="Imported Keys" physicalName="Imported Keys" type="2">
+    </folder>
+    <folder id="FOLTAB344" populated="true" name="Indices" physicalName="Indices" type="4">
+    <index id="IDX42" populated="true" UUID="63ab744b-335e-46e6-b18a-cc3789f8ac3b" clustered="false" name="Cod_licenca" physicalName="Cod_licenca" primaryKeyIndex="true" unique="false" >
+     <index-column id="IDC43" populated="true" UUID="8ef0fe74-269a-4c02-9769-059ccad8bdad" ascendingOrDescending="UNSPECIFIED" column-ref="COL35" name="Cod_licenca" physicalName="Cod_licenca" />
+     <index-column id="IDC44" populated="true" UUID="49b4e39e-99ce-4761-b5ed-74c5615fb2d2" ascendingOrDescending="UNSPECIFIED" column-ref="COL36" name="Num_viagem" physicalName="Num_viagem" />
+     <index-column id="IDC45" populated="true" UUID="ab8f1f0b-5aec-42a4-b22b-c869bb8c6756" ascendingOrDescending="UNSPECIFIED" column-ref="COL37" name="Cod_produto" physicalName="Cod_produto" />
+     <index-column id="IDC46" populated="true" UUID="e425fe01-0b53-4731-9e6c-0360ebd68cfb" ascendingOrDescending="UNSPECIFIED" column-ref="COL38" name="Num_remessa" physicalName="Num_remessa" />
+     <index-column id="IDC47" populated="true" UUID="fe67045a-9d7e-49eb-a77d-385ba6ce08f6" ascendingOrDescending="UNSPECIFIED" column-ref="COL39" name="Cod_CD" physicalName="Cod_CD" />
+    </index>
+   </folder>
+  </table>
+  <table id="TAB48" populated="true" UUID="b0142172-6b31-4962-bcda-aaf1eb3f945d" name="Produto" objectType="TABLE" physicalName="Produto" >
+   <remarks></remarks>
+   <folder id="FOLTAB481" populated="true" name="Columns" physicalName="Columns" type="1">
+    <column id="COL49" populated="true" UUID="e4d5bb43-12aa-41a7-8c47-d68c9b14264b" autoIncrement="false" autoIncrementSequenceName="Produto_Cod_produto_seq" defaultValue="" name="Cod_produto" nullable="0" physicalName="Cod_produto" precision="0" primaryKeySeq="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
+     <remarks></remarks>
+    </column>
+    <column id="COL50" populated="true" UUID="04a53276-0fdd-4065-8157-ba5e6b14bfe6" autoIncrement="false" autoIncrementSequenceName="Produto_Peso_cubado_seq" defaultValue="" name="Peso_cubado" nullable="0" physicalName="Peso_cubado" precision="10" referenceCount="1" scale="2" sourceDataTypeName="UserDefinedSQLType" type="2" userDefinedTypeUUID="115245ce-612c-4d6a-b559-6dd903dd959a" >
+     <remarks></remarks>
+    </column>
+    </folder>
+    <folder id="FOLTAB483" populated="true" name="Exported Keys" physicalName="Exported Keys" type="3">
+    </folder>
+    <folder id="FOLTAB482" populated="true" name="Imported Keys" physicalName="Imported Keys" type="2">
+    </folder>
+    <folder id="FOLTAB484" populated="true" name="Indices" physicalName="Indices" type="4">
+    <index id="IDX51" populated="true" UUID="524a967f-5ef9-42aa-b2b0-4704d1a7372f" clustered="false" name="Cod_produto" physicalName="Cod_produto" primaryKeyIndex="true" unique="false" >
+     <index-column id="IDC52" populated="true" UUID="a7f73fce-7fe7-4cad-897c-ff6d35196b86" ascendingOrDescending="UNSPECIFIED" column-ref="COL49" name="Cod_produto" physicalName="Cod_produto" />
+    </index>
+   </folder>
+  </table>
+  <table id="TAB53" populated="true" UUID="a22ababa-2d24-48b8-a8ee-78e2c983889c" name="Viagem_caminhao" objectType="TABLE" physicalName="Viagem_caminhao" >
+   <remarks></remarks>
+   <folder id="FOLTAB531" populated="true" name="Columns" physicalName="Columns" type="1">
+    <column id="COL54" populated="true" UUID="0f202778-0095-424c-86bf-d77998fac8f3" autoIncrement="false" autoIncrementSequenceName="Viagem_Num_viagem_seq" defaultValue="" name="Num_viagem" nullable="0" physicalName="Num_viagem" precision="0" primaryKeySeq="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
+     <remarks></remarks>
+    </column>
+    <column id="COL55" populated="true" UUID="3407a1c7-a87d-456d-ab9a-893725fafd58" autoIncrement="false" autoIncrementSequenceName="Produto_Cod_produto_seq" defaultValue="" name="Cod_produto" nullable="0" physicalName="Cod_produto" precision="0" primaryKeySeq="1" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
+     <remarks></remarks>
+    </column>
+    <column id="COL56" populated="true" UUID="6b2d12d7-0846-4894-91e1-9f426f9f5e55" autoIncrement="false" autoIncrementSequenceName="Remessa_Num_remessa_seq" defaultValue="" name="Num_remessa" nullable="0" physicalName="Num_remessa" precision="0" primaryKeySeq="2" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
+     <remarks></remarks>
+    </column>
+    <column id="COL57" populated="true" UUID="1277375d-b054-4668-bd9b-d81ffd872c32" autoIncrement="false" autoIncrementSequenceName="CD_contratante _Cod_CD_seq" defaultValue="" name="Cod_CD" nullable="0" physicalName="Cod_CD" precision="0" primaryKeySeq="3" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
+     <remarks></remarks>
+    </column>
+    </folder>
+    <folder id="FOLTAB533" populated="true" name="Exported Keys" physicalName="Exported Keys" type="3">
+    </folder>
+    <folder id="FOLTAB532" populated="true" name="Imported Keys" physicalName="Imported Keys" type="2">
+    </folder>
+    <folder id="FOLTAB534" populated="true" name="Indices" physicalName="Indices" type="4">
+    <index id="IDX58" populated="true" UUID="7ebb4ebd-fd9c-4053-ac7a-44d0c593431b" clustered="false" name="Viagem_caminhao" physicalName="Viagem_caminhao" primaryKeyIndex="true" unique="false" >
+     <index-column id="IDC59" populated="true" UUID="f00037f5-7c9a-462d-91e0-52001bf10986" ascendingOrDescending="UNSPECIFIED" column-ref="COL54" name="Num_viagem" physicalName="Num_viagem" />
+     <index-column id="IDC60" populated="true" UUID="dc560ffd-0b5d-428a-b4f0-018fd2e6b406" ascendingOrDescending="UNSPECIFIED" column-ref="COL55" name="Cod_produto" physicalName="Cod_produto" />
+     <index-column id="IDC61" populated="true" UUID="a1b4623a-4217-4f52-acf2-c0a16c421dc7" ascendingOrDescending="UNSPECIFIED" column-ref="COL56" name="Num_remessa" physicalName="Num_remessa" />
+     <index-column id="IDC62" populated="true" UUID="69e9601f-9171-4f39-9a4d-c5d03a584fe9" ascendingOrDescending="UNSPECIFIED" column-ref="COL57" name="Cod_CD" physicalName="Cod_CD" />
+    </index>
+   </folder>
+  </table>
+  <relationships>
+   <relationship id="REL63" populated="true" UUID="677531c9-996e-454c-a98d-8eafb7972f03" deferrability="7" deleteRule="3" fk-table-ref="TAB7" fkCardinality="6" identifying="true" name="CD_contratante _Remessa_fk" physicalName="CD_contratante _Remessa_fk" pk-table-ref="TAB1" pkCardinality="2" updateRule="3" >
+    <column-mapping id="CMP64" populated="true" UUID="f0e52127-c657-4354-8284-f38eded66155" fk-column-ref="COL9" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL2" />
+   </relationship>
+   <relationship id="REL65" populated="true" UUID="a2f77196-77ee-4e00-b9d3-936c3c890cc7" deferrability="7" deleteRule="3" fk-table-ref="TAB19" fkCardinality="3" identifying="true" name="Remessa_Viagem_fk" physicalName="Remessa_Viagem_fk" pk-table-ref="TAB7" pkCardinality="6" updateRule="3" >
+    <column-mapping id="CMP66" populated="true" UUID="ffc760ba-2753-41cb-a5cd-0ee6780ab1b5" fk-column-ref="COL23" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL9" />
+    <column-mapping id="CMP67" populated="true" UUID="71dd1d3a-0eaf-4edb-ad9d-67ceac48540a" fk-column-ref="COL22" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL8" />
+   </relationship>
+   <relationship id="REL68" populated="true" UUID="c1f912c1-94e2-412c-b169-b61749453e51" deferrability="7" deleteRule="3" fk-table-ref="TAB53" fkCardinality="7" identifying="true" name="Viagem_Viagem_caminhao_fk" physicalName="Viagem_Viagem_caminhao_fk" pk-table-ref="TAB19" pkCardinality="2" updateRule="3" >
+    <column-mapping id="CMP69" populated="true" UUID="289f8046-c864-4f53-998a-9ae9fb22c7fe" fk-column-ref="COL54" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL20" />
+    <column-mapping id="CMP70" populated="true" UUID="b165cb3d-ee83-4dc4-84a1-91b3373756cd" fk-column-ref="COL55" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL21" />
+    <column-mapping id="CMP71" populated="true" UUID="72e40a30-ca19-4c68-9f75-9c76ba2289e3" fk-column-ref="COL56" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL22" />
+    <column-mapping id="CMP72" populated="true" UUID="f10c4f7d-e506-499e-aee3-dff5166e5c6c" fk-column-ref="COL57" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL23" />
+   </relationship>
+   <relationship id="REL73" populated="true" UUID="011b8ada-92f0-4bee-a66f-a828d9cf8d7b" deferrability="7" deleteRule="3" fk-table-ref="TAB19" fkCardinality="6" identifying="true" name="Produto_Viagem_fk" physicalName="Produto_Viagem_fk" pk-table-ref="TAB48" pkCardinality="6" updateRule="3" >
+    <column-mapping id="CMP74" populated="true" UUID="d24571ea-aed3-404a-a58c-f79aa2a0588a" fk-column-ref="COL21" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL49" />
+   </relationship>
+   <relationship id="REL75" populated="true" UUID="eca27e00-0624-4870-94e3-698d2e3d6537" deferrability="7" deleteRule="3" fk-table-ref="TAB34" fkCardinality="6" identifying="true" name="Viagem_caminhao_Caminhao_fk" physicalName="Viagem_caminhao_Caminhao_fk" pk-table-ref="TAB53" pkCardinality="2" updateRule="3" >
+    <column-mapping id="CMP76" populated="true" UUID="308139b1-96f6-46de-85c2-6f8b6ffd3a85" fk-column-ref="COL36" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL54" />
+    <column-mapping id="CMP77" populated="true" UUID="8e5d77ba-18b9-43aa-9baa-3b88dcd4bf91" fk-column-ref="COL37" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL55" />
+    <column-mapping id="CMP78" populated="true" UUID="8343f618-17fc-433e-92d6-d43f64d9c712" fk-column-ref="COL38" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL56" />
+    <column-mapping id="CMP79" populated="true" UUID="16bbf431-3db0-4997-aef1-d5373425da20" fk-column-ref="COL39" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL57" />
+   </relationship>
+  </relationships>
+ </target-database>
+ <ddl-generator type="ca.sqlpower.architect.ddl.GenericDDLGenerator" allow-connection="true"> </ddl-generator>
+ <liquibase-settings useSeparateChangeSets="false" generateId="false" idStart="1"/>
+ <create-kettle-job-settings filePath="" jobName="" schemaName="" kettleJoinType="0" savingToFile="true" />
+ <play-pen zoom="1.4142135623730947" viewportX="0" viewportY="0" relationship-style="rectilinear" names-displayLogicalNames="true" showPrimaryTag="true" showForeignTag="true" showAlternateTag="true" columnVisibility="ALL" relationshipLabelVisibility="true">
+  <table-pane table-ref="TAB1" x="121" y="79" bgColor="0xb9bbf6" fgColor="0x000000" rounded="false" dashed="false"/>
+  <table-pane table-ref="TAB7" x="648" y="55" bgColor="0xb9bbf6" fgColor="0x000000" rounded="false" dashed="false"/>
+  <table-pane table-ref="TAB19" x="405" y="276" bgColor="0xbfd6ff" fgColor="0x000000" rounded="false" dashed="false"/>
+  <table-pane table-ref="TAB34" x="96" y="470" bgColor="0xb9bbf6" fgColor="0x000000" rounded="false" dashed="false"/>
+  <table-pane table-ref="TAB48" x="760" y="372" bgColor="0xf6bcbc" fgColor="0x000000" rounded="false" dashed="false"/>
+  <table-pane table-ref="TAB53" x="70" y="278" bgColor="0xf6bcbc" fgColor="0x000000" rounded="false" dashed="false"/>
+  <table-link relationship-ref="REL63" pkConnection="0.5774647887323944" fkConnection="0.45390070921985815" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="33"/>
+  <table-link relationship-ref="REL73" pkConnection="0.2235294117647059" fkConnection="0.6451612903225806" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="18"/>
+  <table-link relationship-ref="REL65" pkConnection="0.15510204081632653" fkConnection="0.8893617021276595" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="132"/>
+  <table-link relationship-ref="REL68" pkConnection="0.7032258064516129" fkConnection="0.11764705882352941" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="18"/>
+  <table-link relationship-ref="REL75" pkConnection="0.5319148936170213" fkConnection="0.4541984732824427" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="132"/>
+ </play-pen>
+ <critic-manager>
+  <critic-grouping platformType="Generic" enabled="true">
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.PrimaryKeyCritic" severity="ERROR"/>
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.RelationshipMappingTypeCritic" severity="ERROR"/>
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.EmptyRelationshipCritic" severity="ERROR"/>
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.AlphaNumericNameCritic" severity="ERROR"/>
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.AlphaNumericSequenceNameCritic" severity="ERROR"/>
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.SetDefaultOnColumnWithNoDefaultCritic" severity="ERROR"/>
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.SetNullOnNonNullableColumnCritic" severity="ERROR"/>
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.DuplicateNameCritic" severity="ERROR"/>
+  </critic-grouping>
+  <critic-grouping platformType="DB2" enabled="true">
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.DB2UnsupportedFeaturesCritic" severity="ERROR"/>
+  </critic-grouping>
+  <critic-grouping platformType="H2" enabled="true">
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.H2UnsupportedFeaturesCritic" severity="ERROR"/>
+  </critic-grouping>
+  <critic-grouping platformType="HSQLDB" enabled="true">
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.HSQLDBUnsupportedFeaturesCritic" severity="ERROR"/>
+  </critic-grouping>
+  <critic-grouping platformType="MySQL" enabled="true">
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.MySQLCommentCritic" severity="ERROR"/>
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.MySQLReservedWordsCritic" severity="ERROR"/>
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.MySQLUnsupportedFeaturesCritic" severity="ERROR"/>
+  </critic-grouping>
+  <critic-grouping platformType="Oracle" enabled="true">
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.OraclePhysicalNameCritic" severity="ERROR"/>
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.OracleReservedWordsCritic" severity="ERROR"/>
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.OracleUnsupportedFeaturesCritic" severity="ERROR"/>
+  </critic-grouping>
+  <critic-grouping platformType="PostgreSQL" enabled="true">
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.PostgreSQLReservedWordsCritic" severity="ERROR"/>
+  </critic-grouping>
+  <critic-grouping platformType="SQL Server" enabled="true">
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.SQLServerUnsupportedFeaturesCritic" severity="ERROR"/>
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.SQLServerReservedWordsCritic" severity="ERROR"/>
+  </critic-grouping>
+  <critic-grouping platformType="SQL Server 2000" enabled="true">
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.SQLServer2000UnsupportedFeaturesCritic" severity="ERROR"/>
+  </critic-grouping>
+  <critic-grouping platformType="SQL Server 2005" enabled="true">
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.SQLServer2005UnsupportedFeaturesCritic" severity="ERROR"/>
+  </critic-grouping>
+ </critic-manager>
+ <profiles topNCount="10">
+  </profiles>
+  <olap>
+  </olap>
+  <olap-gui>
+  </olap-gui>
+</architect-project>

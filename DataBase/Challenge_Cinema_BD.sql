@@ -172,17 +172,26 @@ ALTER TABLE ingresso
 ADD CONSTRAINT fk_ingresso_pagto
 FOREIGN KEY (forma_pagto)
 	REFERENCES forma_pagto 
+/* 2- Com o comando ALTER TABLE : 
+a) Inclua  uma nova coluna em Funcionário : Data de desligamento
+b) Crie as seguintes constraints de verificação : 
+		Função em Escala-Funcionário : Caixa, Atendente, Gerente
+		Tipo em Assento : Normal, PNE (Portador Necessidades Especiais), Largo */
 
+--a)
 --add coluna em funcionario
 ALTER TABLE funcionario ADD COLUMN dt_desligamento DATE NOT NULL;
 --corrigindo -> valor poderá ser nulo 
 ALTER TABLE funcionario ALTER COLUMN dt_desligamento TYPE DATE;
 ALTER TABLE funcionario ALTER COLUMN dt_desligamento DROP NOT NULL;
-
+--b1)
 --add constraints de verificação em tabela escala_funcionario
 ALTER TABLE escala_funcionario ADD CHECK (funcao IN ('CAIXA', 'GERENTE', 'ATENDENTE'));
 ALTER TABLE assento ADD CHECK (tipo_assento IN ('NORMAL', 'PNE', 'LARGO'));
 
+/**** aula 09/maio - ALTER TABLE , DML (insert, update, delete), 
+DQL SElect funções de caractere e data *****/
+-- Verificando a estrutura da tabela
 --verificando estrutura da tabela
 SELECT table_name AS "Tabela", column_name AS "Coluna", 
 data_type AS "Tipo de Dado", is_nullable AS "Permite nulo"
@@ -266,7 +275,9 @@ INSERT INTO sessao_filme VALUES (default, default, '4D MAX PLUS ULTRA',
 	'Portugues', 'DUBLADO', default, 0, 1001, 'Azul', 4, 'AGENDADA', 'REGULAR');
 INSERT INTO sessao_filme VALUES (default, default, '2D',
 	'Portugues', 'DUBLADO', default, 0, 1000, 'Vermelha', 1, 'AGENDADA', 'REGULAR');
-	
+
+/* Atividade 07 : Utilizando a linguagem SQL 
+1 – Popular as tabelas em verde (criadas na atividade 6) : insira duas linhas em cada tabela */	
 -- horario
 SELECT * FROM horario ;
 INSERT INTO horario VALUES (2, '16:00');
@@ -623,13 +634,344 @@ AND TRUNC (current_date - dt_admissao) > 1;
 /* 4- Mostrar as sessões de cinema exibidas em salas 
 com capacidade superior a 100 lugares: 
 Número da Sessão – Data Sessão – Nome Sala – Capacidade */
+SELECT ss.num_sessao, ss.dt_sessao, sa.nome_sala, sa.capacidade
+FROM sessao_filme ss, sala sa
+WHERE ss.nome_sala = sa.nome_sala
+AND sa.capacidade > 100;
+--com INNER JOIN
+SELECT ss.num_sessao, ss.dt_sessao, sa.nome_sala, sa.capacidade
+FROM sessao_filme ss INNER JOIN sala sa
+	ON (ss.nome_sala = sa.nome_sala)
+WHERE sa.capacidade > 100;
 
+/* 5- Mostrar os ingressos que foram vendidos para sessões de hoje
+do filme ‘Guerra nas estrelas’
+Formato: Número Ingresso - Tipo Ingresso - Valor Pago - Número da Sessão
+Tipo sessão - Título Original Filme – Duração Filme */
+SELECT i.num_ingresso, i.tipo_ingresso, i.vl_pago, tss.num_sessao,
+tss.tipo_sessao, f.titulo_original, f.duracao_min
+FROM filme f, ingresso i, sessao_filme tss
+WHERE i.num_sessao = tss.num_sessao
+AND tss.cod_filme = f.cod_filme
+AND TO_CHAR(current_date, 'DD/MM/YYYY') = TO_CHAR(dt_sessao, 'DD/MM/YYYY')
+AND UPPER (f.titulo_original) LIKE '%GUERRA NAS ESTRELAS%';
 
+/* TESTES DATAS 
 
-SELECT * FROM filme; --3filmes
-SELECT * FROM elenco_filme; --
-SELECT * FROM funcionario; --
+CREATE TABLE teste_datas ( hoje DATE, agora TIMESTAMP) ;
+INSERT INTO teste_datas VALUES (current_date, current_timestamp) ;
+SELECT * FROM teste_datas ;
 
+SELECT * FROM teste_datas WHERE agora = current_timestamp ;
+SELECT hoje, agora, TO_CHAR(agora, 'DD/MM/YY') AS Agora_Hoje
+FROM teste_datas
+WHERE hoje = current_date 
+AND TO_CHAR(agora, 'DD/MM/YY') = TO_CHAR(current_timestamp,'DD/MM/YY' );
+-- usando EXTRACT
+SELECT hoje, agora
+FROM teste_datas
+WHERE EXTRACT(DAY FROM agora) = EXTRACT(DAY FROM current_timestamp)
+AND EXTRACT(MONTH FROM agora) = EXTRACT(MONTH FROM current_timestamp)
+AND EXTRACT(YEAR FROM agora) = EXTRACT(YEAR FROM current_timestamp) ;
+*/
 
+/* 6- Repetir a consulta 5 acima, usando duas sintaxes para o JOIN e
+adicionando os seguintes critérios: 
+--> para salas com capacidade inferior a 100 lugares
+e filmes com mais de 100 minutos de duração, que não sejam LIVRES no formato
+Número Ingresso - Tipo Ingresso - Valor Pago-Número da Sessão - Tipo sessão - 
+Título Original Filme – Duração Filme - Classificação Etária - Nome Sala-Capacidade */
+SELECT i.num_ingresso, i.tipo_ingresso, i.vl_pago, tss.num_sessao,
+tss.tipo_sessao, f.titulo_original, f.duracao_min
+FROM filme f INNER JOIN sessao_filme tss
+	ON (tss.cod_filme = f.cod_filme)
+			 INNER JOIN ingresso i
+	ON (i.num_sessao = tss.num_sessao)
+WHERE duracao_min > 100
+AND UPPER (f.classifica_etaria) NOT LIKE '%LIVRE%';
+
+/* 7- Mostrar os ingressos de meia-entrada vendidos este mês para todos os filmes que tem 
+a participação no elenco do ator ’George Clooney’ (ou algum outro que tenha cadastrado) no formato:
+Número Ingresso - Tipo Ingresso - Assento completo - Valor Pago - Data da Sessão-Horário -
+Título Original Filme – Duração Filme - Tipo Participação */
+SELECT TO_CHAR(ss.dt_sessao, 'MON/YY') AS Mes_Atual,
+i.num_ingresso, i.tipo_ingresso, a.nome_sala||'-'||a.fileira_assento||'-'||a.num_assento AS Assento,
+i.vl_pago, ss.dt_sessao, h.horario, f.titulo_original, f.duracao_min, ef.tipo_participacao
+FROM ingresso i INNER JOIN assento a 
+   ON (i.nome_sala = a.nome_sala 
+	   AND i.fileira.assento = a.fileira.assento 
+	   AND i.num_assento = a.num_assento)
+JOIN sessao_filme ss ON (ss.num_sessao = i.num_sessao)
+JOIN horario h ON (h.cod_hora = ss.cod_hora_exibicao)
+JOIN filme f ON (ss.cod_filme = f.cod_filme)
+JOIN elenco_filme ef ON (f.cod_filme = ef.cod_filme)
+JOIN artista art ON (art.cod_artista = ef.cod_artista)
+WHERE UPPER(art.nome_artista) LIKE '%FERNANDA%'
+AND TO_CHAR(ss.dt_sessao, 'MM/YY') =  TO_CHAR(current_date, 'MM/YY');
+
+SELECT * FROM sessao_filme; -- sessao filme (cod_hora_exibicao) x horario (cod_hora)
+SELECT * FROM ingresso; -- ingresso x sala - nome_sala ------ ingresso x sessao_filme - num_sessao
+SELECT * FROM sala; -- sala x ingresso - num_assento
+SELECT * FROM elenco_filme; -- elenco_filme x filme - cod_fime
+SELECT * FROM horario; -- 
+
+/******************************* 690
+Aula 23/maio - Funções de Grupo 
+********************************/
+-- Funções de Grupo COUNT, MAX, MIN, SUM, AVG
+
+-- Quantas linhas tem uma tabela
+SELECT * FROM elenco_filme;
+SELECT COUNT (*) FROM elenco_filme; 
+UPDATE elenco_filme SET personagem = null WHERE cod_filme = 1000;
+SELECT (personagem) FROM elenco_filme;
+
+-- MAX, MIN, AVG, SUM, COUNT
+SELECT MAX(i.vl_pago) AS Maior,
+	   MIN(i.vl_pago) AS Menor,
+	   AVG(i.vl_pago) AS Media,
+	   SUM(i.vl_pago) AS Soma,
+	   COUNT (*) AS "Total ingressos vendidos"
+FROM ingresso i;
+--Mostrar Total, Média e Qtos ingressos por sessao
+SELECT i.num_sessao AS Sessao, SUM(i.vl_pago) AS "Valor Pago",
+       AVG(i.vl_pago) AS Media, COUNT (*) AS "Total ingressos por sessao" 
+FROM ingresso i
+GROUP BY i.num_sessao;
+-- Mostrar Total, Média e Qtos ingressos por sessao e tipo de ingresso
+SELECT i.num_sessao AS Sessao,
+       i.tipo_ingresso AS "Tipo Ingresso",
+	   SUM(i.vl_pago) AS Soma,
+	   AVG(i.vl_pago) AS Media,
+	   COUNT (*) AS "Quantidade de Ingresso"
+FROM ingresso i
+GROUP BY i.num_sessao, i.tipo_ingresso
+--Incluir o filme
+--ENCONTRAR AS CONEXÕES! 
+SELECT f.titulo_filme AS Sessão,
+	   f.titulo_filme AS "Título Filme",
+	   SUM(i.vl_pago) AS Soma,
+	   AVG(i.vl_pago) AS Média,
+	   COUNT (*) AS "Quantidade de Ingresso"
+FROM filme f, ingresso i, sessao_filme ss 
+WHERE i.num_sessao = ss.num_sessao
+AND ss.cod_filme = f.cod_filme
+GROUP BY f.titulo_filme, i.tipo_ingresso;
+--Desde que o valor total seja maior que 150
+SELECT f.titulo_filme AS Sessão,
+	   f.titulo_filme AS "Título Filme",
+	   SUM(i.vl_pago) AS Soma,
+	   AVG(i.vl_pago) AS Média,
+	   COUNT (*) AS "Quantidade de Ingresso"
+FROM filme f, ingresso i, sessao_filme ss 
+WHERE i.num_sessao = ss.num_sessao
+AND ss.cod_filme = f.cod_filme
+GROUP BY f.titulo_filme, i.tipo_ingresso
+--AND LOWER(ss.nome_sala) NOT LIKE '%azul%'
+HAVING SUM (i.vl_pago) > 150
+ORDER BY Sessão DESC;
+--
+/***** Subconsultas / Subquery ****/
+--Dados dos ingressos de maio valores
+SELECT i.* -- consulta externa 
+FROM ingresso i
+WHERE i.vl_pago = -- consulta interna ou subconsulta
+            ( SELECT MAX(i.vl_pago) FROM ingresso i);
+--			
+SELECT sa.*
+FROM sala sa
+ORDER BY sa.capacidade DESC
+LIMIT 3;
+--Sessões com quantidade de ingressos maior que a média
+SELECT i.num_sessao, COUNT(*) AS Contagem
+FROM ingresso i
+GROUP BY i.num_sessao
+HAVING COUNT(*) >
+				 1.1* (SELECT AVG(Contagem) FROM -- media ingresso
+					  (SELECT COUNT(*) AS Contagem
+					  FROM ingresso i
+					  GROUP BY i.num_sessao) Media);
+
+/*********** Aula 30/maio - Junção Externa + Group BY ****/
+-- 26 - Mostrar o titulo do filme, sala de exibição, ano de exibição,
+-- com o total arrecadado, 
+-- somente para filmes que não são do gênero Romance e 
+-- que tenham arrecadado mais de 1000					  
+SELECT f.titulo_filme, ss.nome_sala AS Sala, 
+EXTRACT(YEAR FROM ss.dt_sessao) AS Ano_Exibicao,
+SUM(i.vl_pago) AS "Total Arrecadado", COUNT(i.num_ingresso) AS "Qtos Ingressos"
+FROM filme f JOIN sessao_filme ss ON ( f.cod_filme = ss.cod_filme)
+             JOIN ingresso i ON (ss.num_sessao = i.num_sessao)
+WHERE UPPER(f.genero) NOT LIKE '%ROMAN%'
+GROUP BY f.titulo_filme, ss.nome_sala, EXTRACT(YEAR FROM ss.dt_sessao)
+HAVING SUM(i.vl_pago) > 250 ;
+
+-- 27 -  Subconsulta - dados do funcionario mais novo
+SELECT f.*, ROUND(((current_date - f.dt_nascto_func)/365.25),1) AS Menor_Idade
+FROM funcionario f 
+WHERE TRUNC((current_date - f.dt_nascto_func)/365.25) = 
+( SELECT MIN(TRUNC((current_date - f.dt_nascto_func)/365.25)) AS Idade
+FROM funcionario f )
+UNION
+( SELECT f.*, ROUND(((current_date - f.dt_nascto_func)/365.25),1) AS Maior_Idade
+FROM funcionario f 
+WHERE TRUNC((current_date - f.dt_nascto_func)/365.25) = 
+( SELECT MAX(TRUNC((current_date - f.dt_nascto_func)/365.25)) AS Idade
+FROM funcionario f )) ;
+
+-- 28 - Subconsulta - dados dos filme mais antigo 
+SELECT f.titulo_filme, f.ano_producao AS "Mais Antigo" 
+FROM Filme f
+WHERE f.ano_producao = ( SELECT MIN(ano_producao) FROM filme)  ;
+
+-- mostrando os dois
+SELECT f.titulo_filme||'-'||f.ano_producao AS "Mais Antigo" ,
+   ( SELECT f.titulo_filme||'-'||f.ano_producao AS Mais_Recente 
+     FROM Filme f
+     WHERE f.ano_producao = ( SELECT MAX(ano_producao) FROM filme))
+FROM Filme f
+WHERE f.ano_producao = ( SELECT MIN(ano_producao) FROM filme)  ;
+
+-- 29 - Mostrar todos os atores que trabalharam junto com Fabio Junior
+-- bye bye brasil 1002
+SELECT * FROM artista ;
+INSERT INTO artista VALUES ( 5, 'Jose Wilker', 'M', 1) ;
+INSERT INTO artista VALUES ( 6, 'Bete Faria', 'F', 1) ;	
+INSERT INTO artista VALUES ( 7, 'Fabio Junior', 'M', 1) ;	
+-- elenco participando do filme
+SELECT * FROM elenco_filme ;
+INSERT INTO elenco_filme VALUES ( 5, 1002, 'Ator', 'Lorde Cigano');
+INSERT INTO elenco_filme VALUES ( 6, 1002, 'Atriz', 'Salome');
+INSERT INTO elenco_filme VALUES ( 7, 1002, 'Ator', 'Ciço');
+
+SELECT f.titulo_filme, a.nome_artista
+FROM elenco_filme ef JOIN artista a
+    ON ( ef.cod_artista = a.cod_artista)
+	                 JOIN filme f
+    ON ( ef.cod_filme = f.cod_filme)
+WHERE UPPER(ef.tipo_participacao) LIKE '%AT%'
+AND f.cod_filme IN (
+-- descobrir os filmes que o Fabio Jr trabalhou
+SELECT ef.cod_filme
+FROM elenco_filme ef JOIN artista a
+    ON ( ef.cod_artista = a.cod_artista)
+WHERE UPPER(a.nome_artista) LIKE '%FABIO%'
+AND UPPER(ef.tipo_participacao) LIKE '%AT%' ) 
+AND UPPER(a.nome_artista) NOT LIKE '%FABIO%' ;
+
+/***************************************
+  JUNÇÃO EXTERNA - OUTER JOIN
+****************************************/
+-- Relembrando a junção interna
+--30 ) Filmes que já tiveram sessão
+SELECT * FROM filme ;
+SELECT f.titulo_filme, f.cod_filme AS "Tá no Filme", ss.cod_filme AS "Tá na Sessão"
+FROM filme f INNER JOIN sessao_filme ss
+      ON ( f.cod_filme = ss.cod_filme ) ;
+
+-- 31 - Filmes que não tiveram sessão
+-- Usando junção externa - OUTER JOIN
+SELECT f.titulo_filme, f.cod_filme AS "Tá no Filme", 
+                       ss.cod_filme AS "NÃO tem Sessão"
+FROM filme f LEFT OUTER JOIN sessao_filme ss
+      ON ( f.cod_filme = ss.cod_filme ) 
+WHERE ss.cod_filme  IS NULL ;
+-- right join
+SELECT f.titulo_filme, f.cod_filme AS "Tá no Filme", 
+                       ss.cod_filme AS "NÃO tem Sessão"
+FROM filme f RIGHT OUTER JOIN sessao_filme ss
+      ON ( f.cod_filme = ss.cod_filme )
+WHERE f.cod_filme IS NULL ;
+-- mudando filme de lado
+SELECT f.titulo_filme, f.cod_filme AS "Tá no Filme", 
+                       ss.cod_filme AS "NÃO tem Sessão"
+FROM sessao_filme ss RIGHT JOIN filme f
+      ON ( f.cod_filme = ss.cod_filme )
+WHERE ss.cod_filme IS NULL ;
+-- full, combina todo com todo mundo
+SELECT f.titulo_filme, f.cod_filme AS "Tá no Filme", 
+                       ss.cod_filme AS "NÃO tem Sessão"
+FROM sessao_filme ss FULL JOIN filme f
+      ON ( f.cod_filme = ss.cod_filme ) ;
+--32 - De outra forma -- usando NOT IN
+SELECT f.* FROM filme f WHERE f.cod_filme IN (
+SELECT f.cod_filme FROM filme f -- todos os filmes
+WHERE f.cod_filme NOT IN (
+SELECT DISTINCT ss.cod_filme FROM sessao_filme ss ) ) ; -- filmes com sessao
+
+--33-  usando operador diferença
+SELECT f.cod_filme FROM filme f -- todos os filmes
+EXCEPT
+SELECT DISTINCT ss.cod_filme FROM sessao_filme ss ;
+
+-- 34 - Mostrar os dados dos assentos nunca ocupados em sessões
+INSERT INTO assento VALUES ( 5, 'C', 'Azul', 'NORMAL', 'DISPONIVEL') ;
+INSERT INTO assento VALUES ( 10, 'H', 'Vermelha', 'NORMAL', 'DISPONIVEL') ;
+-- assentos que não tiveram ingressos vendidos
+SELECT * FROM assento ;
+SELECT a.num_assento, a.fileira_assento, a.nome_sala, i.num_assento AS Ingresso
+FROM assento a LEFT OUTER JOIN ingresso i
+ON ( a.num_assento = i.num_assento AND a.fileira_assento = i.fileira_assento
+	 AND a.nome_sala = i.nome_sala)
+WHERE i.num_assento IS NULL ;
+-- 35 - usando NOT IN
+SELECT a.num_assento, a.fileira_assento, a.nome_sala
+FROM assento a
+WHERE a.num_assento||'-'||a.fileira_assento||'-'||a.nome_sala
+NOT IN ( SELECT i.num_assento||'-'||i.fileira_assento||'-'||i.nome_sala
+FROM ingresso i ) ;
+-- 36 - usando minus
+SELECT a.num_assento, a.fileira_assento, a.nome_sala
+FROM assento a
+EXCEPT
+( SELECT i.num_assento, i.fileira_assento, i.nome_sala
+FROM ingresso i ) ;
+
+--37 ) Mostrar o nome das salas que nunca exibiram filmes de Drama
+INSERT INTO sala VALUES ('Amarela', 230, 'Inclinada', '3D', 'Estereo 3D',
+						 '9mx5m', 'ATIVA') ;	
+SELECT sa.nome_sala, drama.Sala_Drama
+FROM sala sa LEFT OUTER JOIN 
+(
+SELECT ss.nome_sala AS Sala_Drama
+FROM filme f JOIN sessao_filme ss ON ( f.cod_filme = ss.cod_filme)
+WHERE UPPER(f.genero) LIKE '%DRAMA%' ) AS drama
+ON ( sa.nome_sala = drama.Sala_Drama )
+WHERE drama.Sala_Drama IS NULL ;
+
+-- 38 - usando diferença
+SELECT sa.nome_sala FROM sala sa -- todas as salas
+EXCEPT
+( SELECT ss.nome_sala AS Sala_Drama
+FROM filme f JOIN sessao_filme ss ON ( f.cod_filme = ss.cod_filme)
+WHERE UPPER(f.genero) LIKE '%DRAMA%') ;   -- salas que exibiram Drama
+
+-- 39 -  CASE -- na classificacao etaria aparecer um texto explicando
+SELECT * FROM sessao_filme 
+SELECT * FROM filme ;
+UPDATE filme SET classifica_etaria = '18 anos' WHERE cod_filme = 1002;
+SELECT f.titulo_filme, f.genero, f.classifica_etaria,
+CASE f.classifica_etaria
+     WHEN 'Livre' THEN 'Liberado para todas as idades'
+	 WHEN '16 anos' THEN 'Não permitido para menores de 16 anos'
+	 ELSE 'Somente para adultos'
+END AS "Classificacao Etaria"
+FROM filme f;
+
+-- 40 - Funcionario que foi mais vezes escalado como caixa
+SELECT * FROM escala_funcionario;
+
+SELECT func.* FROM funcionario func
+WHERE func.cod_funcional = 
+( SELECT ef.cod_funcional
+       FROM escala_funcionario ef
+       WHERE ef.funcao = 'Caixa'
+       GROUP BY ef.cod_funcional, ef.funcao
+HAVING COUNT(*) = (
+                  SELECT MAX(Qtas_escalacoes) FROM 
+                         (SELECT COUNT(*) Qtas_escalacoes
+                           FROM escala_funcionario ef
+                            WHERE ef.funcao = 'Caixa'
+                           GROUP BY ef.cod_funcional, ef.funcao) escalacoes ));
 
 
